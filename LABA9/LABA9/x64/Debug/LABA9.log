@@ -1,0 +1,4 @@
+﻿  LABA9.cpp
+C:\Users\user\Desktop\labs repos\LABA9\LABA9\LABA9.cpp(91,20): warning C4566: символ, представленный универсальным именем символа "\u2713", невозможно представить в текущей кодовой странице (1251)
+C:\Users\user\Desktop\labs repos\LABA9\LABA9\LABA9.cpp(94,20): warning C4566: символ, представленный универсальным именем символа "\u2717", невозможно представить в текущей кодовой странице (1251)
+  LABA9.vcxproj -> C:\Users\user\Desktop\labs repos\LABA9\x64\Debug\LABA9.exe
