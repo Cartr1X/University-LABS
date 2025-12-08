@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 struct Student
 {
@@ -22,7 +23,7 @@ int main()
     std::vector<Student> stud;
     stud.reserve(nst);
 
-    for(int i = 0; i < nst; i++)
+    for (int i = 0; i < nst; i++)
     {
         Student student;
         std::cout << "Enter student fio: ";
@@ -38,21 +39,35 @@ int main()
         for (int j = 0; j < 4; j++)
         {
             std::cin >> student.grades[j];
-            student.average_score += student.grades[j] / 4.0;
+            student.average_score += student.grades[j];
         }
+        student.average_score /= 4.0;
         std::cin.ignore();
         stud.push_back(student);
-
     }
 
-    std::cout << " Number of students who live in Minsk and have average score not less than 4.5: ";
+    std::vector<std::string> minsk_students;
 
     for (const auto& student : stud)
     {
-        if (student.adress == "Минск" && student.average_score >= 4.5)
+        if (student.adress == "Минск" != std::string::npos && student.average_score >= 4.5)
         {
-            std::cout << student.fio << "\n";
+            minsk_students.push_back(student.fio);
         }
     }
+
+    std::sort(minsk_students.begin(), minsk_students.end());
+
+    std::cout << "Number of students who live in Minsk and have average score not less than 4.5: "
+        << minsk_students.size() << "\n";
+
+    if (!minsk_students.empty())
+    {
+        for (const auto& fio : minsk_students)
+        {
+            std::cout << fio << "\n";
+        }
+    }
+
     return 0;
 }
