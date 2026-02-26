@@ -1,28 +1,21 @@
-import inspect
+from inspect import signature, Parameter
 
-def my_function(a: int, b: str) -> bool:
+def inspect(func):
+    name = func.__name__
+    sig = signature(func)
+    param_types = {}
+
+    for param in sig.parameters.values():
+        if param.kind.description != 'positional or keyword': #позиционные или ключевые аргументы
+            param_types[param.name] = param.kind.description
+        else:
+            if param.default is Parameter.empty:
+                param_types[param.name] = 'positional'
+            else:
+                param_types[param.name] = 'keyword'
+    return name, param_types
+
+def my_function(a, b: int, c = 10) -> bool:
     return True
 
-def inspect_function(func):
-    """
-    Возвращает тип функции и типы её переменных (аннотации).
-    """
-    signature = inspect.signature(func)
-    types = {
-        'function_name': func.__name__,
-        'function_type': type(func).__name__,
-        'parameters': {
-            name: param.annotation 
-            for name, param in signature.parameters.items()
-        },
-        'return_type': signature.return_annotation
-    }
-    return types
-
-# Использование
-info = inspect_function(my_function)
-print(info)
-# Вывод: {'function_name': 'my_function', 'function_type': 'function', 
-#         'parameters': {'a': <class 'int'>, 'b': <class 'str'>}, 
-#         'return_type': <class 'bool'>}
-# Сделать ввод и вывод фукнции тип ее и тп
+print(inspect(my_function))
