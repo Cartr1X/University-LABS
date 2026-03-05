@@ -6,5 +6,5 @@ def evaluate(coef, x):
     else:
          return coef[0] * (x ** (len(coef) - 1)) + evaluate(coef[1:], x)
 # Пример
-print(evaluate([2, 4, 3], 10))
-print(evaluate([1, 2, 3], 10))
+*coef, x = map(int, input("Введите коэффициенты и x: ").split())
+print(evaluate(coef, x))
