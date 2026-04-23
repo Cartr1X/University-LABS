@@ -7,12 +7,12 @@ bin_file_2 = "words_list.bin"
 backup_file_1 = "binary_numbers.bak"
 backup_file_2 = "words_list.bak"
 
-def load_list(filepath, backup_path, list_name):
+def load_list(filepath, backup_path, list_name): # проверка на существование файла
     if os.path.exists(filepath):
         try:
-            with open(filepath, "rb") as f:
-                return pickle.load(f)
-        except:
+            with open(filepath, "rb") as f: # открывает файл на чтение в бинарном режиме
+                return pickle.load(f) # Считывает данные и превращает их обратно в список
+        except: # если файл поврежден, предлагает выбрать файл из бэкапа
             print(f"\nФайл {list_name} повреждён!")
             if os.path.exists(backup_path):
                 print(f"Доступна резервная копия для {list_name}")
@@ -22,16 +22,16 @@ def load_list(filepath, backup_path, list_name):
             return []
     return []
 
-def save_list(filepath, data, backup_path=None):
+def save_list(filepath, data, backup_path=None): # сохранение 
     if backup_path and os.path.exists(filepath):
         try:
-            shutil.copy2(filepath, backup_path)
+            shutil.copy2(filepath, backup_path) # перед сохранением новых данных копирует текущий файл в резервную копию
         except:
             pass
     with open(filepath, "wb") as f:
-        pickle.dump(data, f)
+        pickle.dump(data, f) # записывает текущий список в файл в бинарном формате
 
-def edit_list(data, name):
+def edit_list(data, name): # редактирование
     while True:
         print(f"\n{name} (сейчас {len(data)} шт.):")
         for i, val in enumerate(data):
@@ -54,7 +54,8 @@ def edit_list(data, name):
             except:
                 print("Неверный индекс")
 
-def restore_from_backup(filepath, backup_path, list_name):
+def restore_from_backup(filepath, backup_path, list_name): # восстановление 
+    # читает данные из .bak файла и перезаписывает ими основной .bin файл, чтобы исправить повреждение
     if os.path.exists(backup_path):
         try:
             with open(backup_path, "rb") as f:
@@ -69,7 +70,7 @@ def restore_from_backup(filepath, backup_path, list_name):
         print(f"Резервная копия для {list_name} не найдена")
         return []
 
-def check_file_integrity(filepath, backup_path, list_name):
+def check_file_integrity(filepath, backup_path, list_name): # проверка целостности 
     if os.path.exists(filepath):
         try:
             with open(filepath, "rb") as f:
@@ -130,4 +131,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-# СДЕЛАТЬ КОММЕНТАРИИ
